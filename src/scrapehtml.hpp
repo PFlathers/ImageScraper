@@ -16,7 +16,7 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 11, 2017
+ * Last edited:	August 12, 2017
  */
 
 
@@ -25,22 +25,22 @@
 #include <curl/curl.h>
 
 // Pass in a char* to the page that you want to scrape for images.
-void gatherWebPages(char*);
+void gatherWebPages(char *seed_url);
 
 // Pass a url, a save file name, and an open CURL. Downloads the html
 // for the url.
-int getPage(char*, const char*, CURL *);
+int getPage(char *url, const char *page_name, CURL *curl);
 
 // Pass a reference to a open CURL and a html file name to download
 // all images references in <img> in the html.
-int getImages(CURL*, char*);
+int getImages(CURL *curl, char *page_name);
 
 // Pass the char* to a string of the previous file name, which will
 // be freed. Returns the next file name. The int numbers the files.
-char* incPage(char*, int*);
+char* incPage(char *page_name, int *page_count);
 
 // Pass the seed_url, the previous url, and the page number for the
 // infinite scrolling. Returns the next url_page to scrape.
-char* nextSeedUrl(char*, char*, int);
+char* nextSeedUrl(char *seed_url, char *url, int page_count);
 
 #endif
