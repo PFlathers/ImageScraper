@@ -39,4 +39,9 @@ bin/
 
 # Data saved
 temp/
+img/
+.jpg
 .html
+
+# Notes
+.txt

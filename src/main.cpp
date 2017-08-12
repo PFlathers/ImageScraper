@@ -1,20 +1,41 @@
+/* This file is part of ImageScraper
+ *
+ * ImageScraper is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ImageScraper is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warrenty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ImageScraper. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * Author:	Patrick J. Flathers
+ * Created:	August 7, 2017
+ * Last edited:	August 11, 2017
+ *
+ *
+ * This File acts as the driver for Image Scraper. While it does not
+ * currently contain much, it allows to easy follow the flow of the
+ * program incase other features are later added.
+ *
+ */
+
 #include <string.h>
 #include <tidy.h>
-#include <curl/curl.h>
-#include <fstream>
 #include <iostream>
-#include "main.hpp"
-#include "typeCheck.hpp"
+#include "scrapehtml.hpp"
 
 using namespace std;
-
-//TODO: this doesnt really need to be static.
-static const char html_folder[] = "temp/";
-static const char html_ext[] = ".html";
 
 int main(int argc, char *argv[])
 {
 	//TODO: change to <= 2 and make a while loop to take in multiple urls.
+	//TODO: allow for urls to be read in from a plain text file.
 	//TODO: add --help option to print out things.
 	//TODO: add input for how pages are structured for infinite scrolling
 	//pages.
@@ -27,54 +48,3 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void gatherWebPages(char *seedUrl)
-{
-	CURL *curl;
-	curl = curl_easy_init();
-	int result = 0;
-	int page_count = 0;
-	char *pagename = NULL;
-
-	while(!result){
-		pagename = incPage(pagename, &page_count);
-		result = getPage(seedUrl, pagename, curl);
-	}
-	curl_easy_cleanup(curl);
-}
-
-
-char* incPage(char *pagename, int *page_count)
-{
-	int count_size = numPlaces(*page_count);
-	int namelen = strlen(html_folder) + strlen(html_ext) + count_size + 1;
-	if(pagename)
-		free(pagename);
-
-	pagename = (char*) malloc(namelen * sizeof(char));
-	sprintf(pagename, "%s%d%s", html_folder, *page_count, html_ext);
-	*page_count += 1;
-	return pagename;
-}
-
-//TODO: add the url in the error msg.
-int getPage(char *url, const char* pagename, CURL *curl)
-{
-	CURLcode res;
-	FILE *page = fopen(pagename, "w+");
-	if(curl){
-		curl_easy_setopt(curl, CURLOPT_URL, url);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, page);
-		res = curl_easy_perform(curl);
-		if(res != CURLE_OK){
-			cout << "curl_easy_perform() failed: " <<
-				curl_easy_strerror(res) <<
-				"\nOn url: " << url << "\n";
-			return 1;
-		}
-
-		curl_easy_reset(curl);
-	}
-
-	fclose(page);
-	return 0;
-}

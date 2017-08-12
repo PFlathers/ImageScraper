@@ -13,17 +13,34 @@
  * You should have received a copy of the GNU General Public License
  * along with ImageScraper. If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
  * Last edited:	August 11, 2017
- *
  */
 
-#ifndef __TYPECHECK_H__
-#define __TYPECHECK_H__
 
-// Pass an 32 bit int and get back the number of places the int has.
-// Does not work for unsigned ints or 64 bit ints yet.
-int numPlaces(int n);
+#ifndef __SCRAPE_HTML_H__
+#define __SCRAPE_HTML_H__
+#include <curl/curl.h>
+
+// Pass in a char* to the page that you want to scrape for images.
+void gatherWebPages(char*);
+
+// Pass a url, a save file name, and an open CURL. Downloads the html
+// for the url.
+int getPage(char*, const char*, CURL *);
+
+// Pass a reference to a open CURL and a html file name to download
+// all images references in <img> in the html.
+int getImages(CURL*, char*);
+
+// Pass the char* to a string of the previous file name, which will
+// be freed. Returns the next file name. The int numbers the files.
+char* incPage(char*, int*);
+
+// Pass the seed_url, the previous url, and the page number for the
+// infinite scrolling. Returns the next url_page to scrape.
+char* nextSeedUrl(char*, char*, int);
 
 #endif

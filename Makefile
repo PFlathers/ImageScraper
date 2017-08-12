@@ -2,7 +2,7 @@
 CC 		:= g++
 
 #The Target Binary
-TARGET 		:= program
+TARGET 		:= image_scraper.out 
 
 #Flags, Libraries, and Includes
 DEBUG 		:= -g

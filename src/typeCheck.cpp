@@ -1,9 +1,30 @@
+/* This file is part of ImageScraper
+ *
+ * ImageScraper is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ImageScraper is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warrenty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ImageScraper. If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * Author:	Patrick J. Flathers
+ * Created:	August 7, 2017
+ * Last edited:	August 11, 2017
+ *
+ * This file contains functions for checking properties of primitives.
+ *
+ */
+
 #include <limits.h>
 
-
-
-
-
+// Returns how many places an 32 bit int has.
 int numPlaces(int n)
 {
 	if (n < 0) n = (n == INT_MIN) ? INT_MAX: -n;
