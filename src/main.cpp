@@ -16,7 +16,7 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 11, 2017
+ * Last edited:	August 12, 2017
  *
  *
  * This File acts as the driver for Image Scraper. While it does not
@@ -26,7 +26,6 @@
  */
 
 #include <string.h>
-#include <tidy.h>
 #include <iostream>
 #include "scrapehtml.hpp"
 

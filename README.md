@@ -10,3 +10,6 @@ Run `make` in the directory to build.
 
 ### Run:
 run `bin/image_scraper.out [url]` to start scraping.
+
+### Dependencies:
+* `libcurl`, <curl/curl.h>

@@ -16,7 +16,7 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 11, 2017
+ * Last edited:	August 12, 2017
  *
  *
  * This file exists for the purpose of downloading the html for
@@ -42,7 +42,6 @@
  */
 
 
-#include <string.h>
 #include <curl/curl.h>
 #include <string.h>
 #include <iostream>
