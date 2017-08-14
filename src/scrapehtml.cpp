@@ -16,7 +16,7 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 12, 2017
+ * Last edited:	August 14, 2017
  *
  *
  * This file exists for the purpose of downloading the html for
@@ -80,15 +80,18 @@ void gatherWebPages(char *seed_url)
 		img_result = getImages(curl, page_name);
 		if(img_result == 0){
 			std::cout << "Page: " << page_name << "\n" <<
-				"Has no images, assuming its a prototype, terminating\n";
+				"Has no images, assuming its a page without" << 
+				" images or a prototype, terminating\n";
 			break;
 		}
 		url = nextSeedUrl(seed_url, url, page_count);
 	}
 
 	std::cout << "Finished!\n";
-	free(page_name);
-	free(url);
+	if(page_name)
+		free(page_name);
+	if(strcmp(url, seed_url))
+		free(url);
 	curl_easy_cleanup(curl);
 }
 

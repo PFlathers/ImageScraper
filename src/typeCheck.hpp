@@ -15,7 +15,7 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 11, 2017
+ * Last edited:	August 14, 2017
  *
  */
 
@@ -26,4 +26,7 @@
 // Does not work for unsigned ints or 64 bit ints yet.
 int numPlaces(int n);
 
+//Checks if a directory exists, returns 0 if it does or if it can be created.
+//return >0 otherwise.
+int dirCheck(char *path);
 #endif

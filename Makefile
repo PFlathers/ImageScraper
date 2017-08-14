@@ -13,7 +13,9 @@ LIB 		:= -lcurl
 #The Directories, Source, Includes, Objects, Binary, and Resources
 BUILDDIR 	:= build
 BINDIR 		:= bin
+IMGDIR 		:= img
 SRCDIR 		:= src
+TEMPDIR 	:= temp
 OBJEXT 		:= o
 DEPEXT 		:= d
 SRCEXT 		:= cpp
@@ -37,6 +39,8 @@ clean:
 
 cleaner: clean
 	@rm -rf $(BINDIR)
+	@rm -rf $(IMGDIR)
+	@rm -rf $(TEMPDIR)
 
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
 

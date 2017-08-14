@@ -26,10 +26,15 @@
  */
 
 #include <string.h>
+#include <unistd.h>
 #include <iostream>
 #include "scrapehtml.hpp"
+#include "typeCheck.hpp"
 
 using namespace std;
+
+static char img[] = "img/";
+static char temp[] = "temp/";
 
 int main(int argc, char *argv[])
 {
@@ -42,8 +47,14 @@ int main(int argc, char *argv[])
 	if ( argc != 2 )
 		cout << "usage: " << argv[0] << " <url>\n";
 
+	int direrror = dirCheck(img) + dirCheck(temp);
+
+	if (direrror > 0){
+		cout << "Need directories 'img/' and 'temp/'\n Unable to create\n"
+			<< "Exiting\n";
+		return 1;
+	}
 	char *seedUrl = (argv[1]);
 	gatherWebPages(seedUrl);
 	return 0;
 }
-

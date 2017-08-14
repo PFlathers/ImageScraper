@@ -16,13 +16,19 @@
  *
  * Author:	Patrick J. Flathers
  * Created:	August 7, 2017
- * Last edited:	August 11, 2017
+ * Last edited:	August 14, 2017
  *
  * This file contains functions for checking properties of primitives.
  *
  */
 
+#include <errno.h>
 #include <limits.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <iostream>
+
 
 // Returns how many places an 32 bit int has.
 int numPlaces(int n)
@@ -42,4 +48,35 @@ int numPlaces(int n)
 	// pretty, but its fast.
 
 	return 10;
+}
+
+// checks if a directory exists, if not then create, if it cant return error.
+int dirCheck(char *path)
+{
+	struct stat s;
+	int err = stat(path, &s);
+	//Checks for errors
+	if (err == -1){
+		//path doesnt exists
+		if (ENOENT == errno){
+			std::cout << "creating: " << path << "\n";
+			mkdir(path, 0777);
+			return 0;
+		//something else
+		} else {
+			std::cout << "error\n";
+			return 1;
+		}
+	//path does exist
+	} else {
+		if (S_ISDIR(s.st_mode)){
+			std::cout << path << " exists\n";
+			return 0;
+		}
+		//path is not a dir
+		 else{
+			std::cout << path << " exists but is not a directory";
+			return 2;
+		 }
+	}
 }
