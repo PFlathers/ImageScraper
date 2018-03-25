@@ -44,17 +44,41 @@ int main(int argc, char *argv[])
 	//TODO: add input for how pages are structured for infinite scrolling
 	//pages.
 	//TODO: add function for checking flags and inputs.
-	if ( argc != 2 )
+	if ( argc != 2 || argc != 3 )
 		cout << "usage: " << argv[0] << " <url>\n";
 
-	int direrror = dirCheck(img) + dirCheck(temp);
+	int direrror = dirCheck(temp);// + dirCheck(img) 
+        printf("argv[0]:%s\nargv[1]:%s\nargv[2]:%s\nargc:%d\n", argv[0], argv[1], argv[2], argc);
 
 	if (direrror > 0){
 		cout << "Need directories 'img/' and 'temp/'\n Unable to create\n"
 			<< "Exiting\n";
 		return 1;
 	}
-	char *seedUrl = (argv[1]);
-	gatherWebPages(seedUrl);
-	return 0;
+        if (argc == 2){
+                char *seedUrl = (argv[1]);
+                gatherWebPages(seedUrl);
+                return 0;
+        } else if (argc == 3 && !strcmp(argv[1], "-f")){
+                FILE *fp;
+                char *line = NULL;
+                size_t len = 0;
+                ssize_t read;
+                fp = fopen(argv[2], "r");
+                if (fp == NULL)
+                        return(-1);
+
+                while ((read = getline(&line, &len, fp)) != -1){
+                        line[strlen(line)-1] = '\0';
+                        if( line[strlen(line)-1] == '/')
+                                line[strlen(line)-1] = '\0';
+                        printf("%s", line);
+                        gatherWebPages(line);
+                }
+                fclose(fp);
+                if(line)
+                        free(line);
+                return 0;
+        }
+	return 37;
 }

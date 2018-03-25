@@ -53,7 +53,7 @@
 using namespace std;
 static const char html_folder[] = "temp/";
 static const char html_ext[] = ".html";
-static const char img_folder[] = "img/";
+static char *img_folder;
 static const char img_ext[] = ".jpg";
 static const char page_app[] = "/page/";
 
@@ -70,6 +70,12 @@ void gatherWebPages(char *seed_url)
 	int page_result = 0;
 	int page_count = 1;
 	int img_result = 0;
+
+        img_folder = (char*) malloc(sizeof(char) * (strlen(seed_url) + 1));
+        sprintf(img_folder, "%s/", seed_url+8);
+        int dir_err = dirCheck(img_folder);
+        if(dir_err > 0)
+                return;
 
 	std::cout << "Starting with url: " << seed_url << "\n";
 
